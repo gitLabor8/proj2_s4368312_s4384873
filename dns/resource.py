@@ -5,6 +5,8 @@
 This class contains classes for DNS resource records and record data. This
 module is fully implemented. You will have this module in the implementation
 of your resolver and server.
+
+See RFC 1034 section 3.6 for more information
 """
 
 import socket

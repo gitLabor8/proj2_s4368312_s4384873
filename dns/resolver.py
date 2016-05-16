@@ -18,7 +18,7 @@ from dns.types import Type
 class Resolver(object):
     """ DNS resolver """
     
-    def __init__(self, caching, ttl):
+    def __init__(self, caching, ttl, timeout):
         """ Initialize the resolver
         
         Args:
@@ -27,12 +27,13 @@ class Resolver(object):
         """
         self.caching = caching
         self.ttl = ttl
+        self.timeout = timeout
 
     def gethostbyname(self, hostname):
         """ Translate a host name to IPv4 address.
 
         Currently this method contains an example. You will have to replace
-        this example with example with the algorithm described in section
+        this example with the algorithm described in section
         5.3.3 in RFC 1034.
 
         Args:
@@ -41,8 +42,12 @@ class Resolver(object):
         Returns:
             (str, [str], [str]): (hostname, aliaslist, ipaddrlist)
         """
-        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        sock.settimeout(timeout)
+        #TODO: search cache for hostname
+        
+        found = False
+        #while(not found):
+            sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            sock.settimeout(self.timeout)
 
         # Create and send query
         question = dns.message.Question(hostname, Type.A, Class.IN)

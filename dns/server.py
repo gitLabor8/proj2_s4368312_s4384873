@@ -16,7 +16,7 @@ from threading import Thread
 class RequestHandler(Thread):
     """ A handler for requests to the DNS server """
 
-    def __init__(self, clientSocket):
+    def __init__(self, clientSocket, caching, ttl):
         """ Initialize the handler thread """
         super().__init__()
         self.daemon = True
@@ -25,11 +25,9 @@ class RequestHandler(Thread):
     def run(self):
         """ Run the handler thread """
         # Handle DNS request
-        caching = False
-        ttl = 10
         resolver = Resolver(caching, ttl)
         messageReceived = self.clientSocket.recv(1024)
-        hostname = message 	# for now, TODO Parse input
+        hostname = message 	# TODO Parse input
         ip = resolver.gethostbyname(hostname)
         messageSend = ip 	# TODO Create nice message
         self.clientSocket.send(messageSend)
@@ -54,6 +52,7 @@ class Server(object):
         # Create socket
         self.webSocket = socket.socket(AF_INET, SOCK_STREAM)
         self.webSocket.bind(('', self.port))
+        
     def serve(self):
         """ Start serving request """
         # Start listening
@@ -61,6 +60,8 @@ class Server(object):
         while not self.done:
             # Receive request and open handler
             (reqSocket, address) = self.webSocket.accept()
+            reqHandler = RequestHandler(reqSocket, caching, ttl)
+            
     def shutdown(self):
         """ Shutdown the server """
         self.done = True

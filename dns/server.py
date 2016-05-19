@@ -7,29 +7,20 @@ server using the algorithm described in section 4.3.2 of RFC 1034.
 """
 
 import socket
-from socket import AF_INET, SOCK_STREAM
 from threading import Thread
 
 
 class RequestHandler(Thread):
     """ A handler for requests to the DNS server """
 
-    def __init__(self, reqSocket, address):
+    def __init__(self):
         """ Initialize the handler thread """
         super().__init__()
         self.daemon = True
-        self.socket = reqSocket
-        self.address = address
         
     def run(self):
         """ Run the handler thread """
-        # TODO: Handle DNS request        
-        listServerAdresses 
-        FQDNstring = self.socket.recv(1024)
-        print "\nFQDNstring: " + FQDNstring + "\n"
-        # TODO: remove hardcoded caching, ttl & timeout
-        resolver = Resolver(self, 0, 60, 0.5)
-        resolver.gethostbyname(FQDNstring)
+        # TODO: Handle DNS request
         pass
 
 
@@ -48,22 +39,15 @@ class Server(object):
         self.ttl = ttl
         self.port = port
         # TODO: create socket
-        webSocket = socket.socket(AF_INET,SOCK_STREAM)
-        webSocket.bind(('',self.port))
 
     def serve(self):
         """ Start serving request """
         # TODO: start listening
-        webSocket.listen(1)
         while not self.done:
             # TODO: receive request and open handler
-            (reqSocket, address) = webSocket.accept()
-            reqHandler = RequestHandler(reqSocket, address)
-            reqHandler.run()
             pass
 
     def shutdown(self):
         """ Shutdown the server """
         self.done = True
         # TODO: shutdown socket
-		

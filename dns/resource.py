@@ -5,8 +5,6 @@
 This class contains classes for DNS resource records and record data. This
 module is fully implemented. You will have this module in the implementation
 of your resolver and server.
-
-See RFC 1034 section 3.6 for more information
 """
 
 import socket
@@ -201,7 +199,7 @@ class AAAARecordData(RecordData):
         return socket.inet_pton(socket.AF_INET6, self.data)
 
     @classmethod
-    def from_bytes(packet, offset, rdlength, parser):
+    def from_bytes(cls, packet, offset, rdlength, parser):
         """ Create a RecordData object from bytes
 
         Args:
@@ -225,7 +223,7 @@ class GenericRecordData(RecordData):
         return self.data
 
     @classmethod
-    def from_bytes(packet, offset, rdlength, parser):
+    def from_bytes(cls,packet, offset, rdlength, parser):
         """ Create a RecordData object from bytes
 
         Args:

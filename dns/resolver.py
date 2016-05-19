@@ -43,30 +43,32 @@ class Resolver(object):
             (str, [str], [str]): (hostname, aliaslist, ipaddrlist)
         """
         timeout = 2 # the time waited for a response
-        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        sock.settimeout(timeout)
-
-        # Create and send query
-        question = dns.message.Question(hostname, Type.A, Class.IN)
-        header = dns.message.Header(9001, 0, 1, 0, 0, 0)
-        header.qr = 0
-        header.opcode = 0
-        header.rd = 1
-        query = dns.message.Message(header, [question])
-        sock.sendto(query.to_bytes(), ("8.8.8.8", 53))
-
-        # Receive response
-        data = sock.recv(512)
-        response = dns.message.Message.from_bytes(data)
-
-        # Get data
-        aliases = []
-        for additional in response.additionals:
-            if additional.type_ == Type.CNAME:
-                aliases.append(additional.rdata.data)
-        addresses = []
-        for answer in response.answers:
-            if answer.type_ == Type.A:
-                addresses.append(answer.rdata.data)
+        found = False
+        while(not found):
+            sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            sock.settimeout(timeout)
+    
+            # Create and send query
+            question = dns.message.Question(hostname, Type.A, Class.IN)
+            header = dns.message.Header(9001, 0, 1, 0, 0, 0)
+            header.qr = 0
+            header.opcode = 0
+            header.rd = 1
+            query = dns.message.Message(header, [question])
+            sock.sendto(query.to_bytes(), ("8.8.8.8", 53))
+    
+            # Receive response
+            data = sock.recv(512)
+            response = dns.message.Message.from_bytes(data)
+    
+            # Get data
+            aliases = []
+            for additional in response.additionals:
+                if additional.type_ == Type.CNAME:
+                    aliases.append(additional.rdata.data)
+            addresses = []
+            for answer in response.answers:
+                if answer.type_ == Type.A:
+                    addresses.append(answer.rdata.data)
 
         return hostname, aliases, addresses

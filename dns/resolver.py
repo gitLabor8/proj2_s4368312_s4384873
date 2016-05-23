@@ -46,6 +46,7 @@ class Resolver(object):
         found = False
         servername = "8.8.8.8"
         serverport = 8080
+        searchname = domainname
         aliases = [domainname]
         addresses = []
         hints = ["198.41.0.4","192.228.79.201","192.33.4.12","199.7.91.13","192.203.230.10","192.5.5.241","192.112.36.4","198.97.190.53","192.36.148.17","192.58.128.30","193.0.14.129","199.7.83.42","202.12.27.33"]
@@ -56,7 +57,7 @@ class Resolver(object):
             servername = hints[hintdex]
             
             # Create and send query
-            question = dns.message.Question(domainname, Type.A, Class.IN)
+            question = dns.message.Question(searchname, Type.A, Class.IN)
             header = dns.message.Header(9001, 0, 1, 0, 0, 0)
             header.qr = 0
             header.opcode = 0
@@ -77,13 +78,22 @@ class Resolver(object):
                     if answer.type_ == Type.A:
                         addresses.append(answer.rdata.data)
             else:
-                if not response.header.an_count == 0:
-                    for answer in response.answers:
-                        if answer.type_ == Type.A:
-                            addresses.append(answer.rdata.data)
-                        if answer.type_ == Type.NS:
-                            hints.insert(hintdex, answer.rdata.data)
-                else:
-                    hintdex = hintdex + 1
+                for answer in response.answers:
+                    if answer.type_ == Type.A:
+                        addresses.append(answer.rdata.data)
+                    if answer.type_ == Type.CNAME:
+                        searchname = answer.rdata.data
+                        aliases.append(searchname)
+                        if not response.header.ar_count == 0:
+                            for additional in response.additionals:
+                                if additional.name == searchname:
+                                    addresses.append(additional.rdata.data)
+                for authority in response.authorities:
+                    if authority.type_ == Type.NS:
+                        nsName = authority.rdata.data
+                        for additional in response.additionals:
+                            if additional.name == nsName:
+                                hints.insert(hintdex + 1, additional.rdata.data)
+                hintdex = hintdex + 1
 
         return domainname, aliases, addresses

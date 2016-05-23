@@ -8,7 +8,7 @@ server using the algorithm described in section 4.3.2 of RFC 1034.
 See RFC 1034 section 3.6 for more information
 """
 
-from socket import AF_INET, SOCK_STREAM
+from socket import AF_INET, SOCK_DGRAM
 import socket
 from threading import Thread
 
@@ -50,20 +50,24 @@ class Server(object):
         self.port = port
         self.done = False
         # Create socket
-        self.webSocket = socket.socket(AF_INET, SOCK_STREAM)
+        self.webSocket = socket.socket(AF_INET, SOCK_DGRAM)
         self.webSocket.bind(('', self.port))
         
     def serve(self):
         """ Start serving request """
-        # Start listening
-        self.webSocket.listen(1)
         while not self.done:
+            d = self.webSocket.recvfrom(1024)
+            data = d[0]
+            address = d[1]
+            if not data:
+                break
             # Receive request and open handler
-            (reqSocket, address) = self.webSocket.accept()
-            reqHandler = RequestHandler(reqSocket, caching, ttl)
+            print "All good!\n" + data + "address: " + address
+            #(reqSocket, address) = self.webSocket.accept()
+            #reqHandler = RequestHandler(reqSocket, caching, ttl)
             
     def shutdown(self):
         """ Shutdown the server """
         self.done = True
-        # shutdown socket
-		self.webSocket.close()
+        # shutdown socket, neccesairy?
+        webSocket.close()

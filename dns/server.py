@@ -11,16 +11,22 @@ See RFC 1034 section 3.6 for more information
 from socket import AF_INET, SOCK_DGRAM
 import socket
 from threading import Thread
+from dns.resolver import Resolver
 
 
 class RequestHandler(Thread):
     """ A handler for requests to the DNS server """
+# Sources
+# http://www.bogotobogo.com/python/Multithread/python_multithreading_subclassing_creating_threads.php
+# http://www.binarytides.com/programming-udp-sockets-in-python/
 
-    def __init__(self, clientSocket, caching, ttl):
+    def __init__(self, group=None, target=None, name=None,
+                 args=(), kwargs=None, verbose=None):
         """ Initialize the handler thread """
-        super().__init__()
+        super(Thread, self).__init__(group=group, target=target, name=name, verbose=verbose)
+        self.args = args
+        self.caching = args[3]
         self.daemon = True
-        self.clientSocket = clientSocket
         
     def run(self):
         """ Run the handler thread """
@@ -29,8 +35,9 @@ class RequestHandler(Thread):
         messageReceived = self.clientSocket.recv(1024)
         hostname = message 	# TODO Parse input
         ip = resolver.gethostbyname(hostname)
-        messageSend = ip 	# TODO Create nice message
-        self.clientSocket.send(messageSend)
+        #messageSend = ip 	# TODO Create nice message
+        messageSend = "Ack!"
+        self.clientSocket.send(messageSend, clienAddr)
         self.clientSocket.close()
 
 
@@ -56,15 +63,15 @@ class Server(object):
     def serve(self):
         """ Start serving request """
         while not self.done:
-            d = self.webSocket.recvfrom(1024)
-            data = d[0]
-            address = d[1]
-            if not data:
-                break
             # Receive request and open handler
-            print "All good!\n" + data + "address: " + address
-            #(reqSocket, address) = self.webSocket.accept()
-            #reqHandler = RequestHandler(reqSocket, caching, ttl)
+            d = self.webSocket.recvfrom(1024)
+            requestMessage = d[0]
+            clientAddr = d[1]
+            if not requestMessage:
+                break
+            print "Server.serve, data: " + requestMessage
+            reqHandler = RequestHandler(args={requestMessage, clientAddr, self.caching, self.ttl})
+            thread.start()
             
     def shutdown(self):
         """ Shutdown the server """

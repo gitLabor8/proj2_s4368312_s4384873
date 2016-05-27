@@ -47,7 +47,7 @@ if __name__ == "__main__":
     d = client_socket.recvfrom(1024)
     reply = d[0]
     address = d[1]
-    print "reply: " + reply + "\naddress: " + address
+    print "reply: " + reply
 #	byteResponse = self.client_socket.recv(1024)
 #	response = Message.(byteResponse)
 #	response.getResources

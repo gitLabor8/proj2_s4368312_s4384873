@@ -20,19 +20,19 @@ class RequestHandler(Thread):
 # http://www.bogotobogo.com/python/Multithread/python_multithreading_subclassing_creating_threads.php
 # http://www.binarytides.com/programming-udp-sockets-in-python/
 
-    def __init__(self, group=None, target=None, name=None,
-                 args=(), kwargs=None, verbose=None):
+    def __init__(self, requestMessage, clientAddr, caching, ttl):
         """ Initialize the handler thread """
-        super(Thread, self).__init__(group=group, target=target, name=name, verbose=verbose)
-        self.args = args
-        self.caching = args[3]
-        self.daemon = True
+        super(Thread, self).__init__()
+        self.requestMessage = requestMessage
+        self.clientAddr = clientAddr
+        self.caching = caching
+        self.ttl = ttl
         
     def run(self):
         """ Run the handler thread """
         # Handle DNS request
-        resolver = Resolver(caching, ttl)
-        messageReceived = self.clientSocket.recv(1024)
+        resolver = Resolver(self.caching, self.ttl)
+        print "Hij komt nu tot hier. Dit is het gedeelt dat jij snapt."
         hostname = message 	# TODO Parse input
         ip = resolver.gethostbyname(hostname)
         #messageSend = ip 	# TODO Create nice message
@@ -70,8 +70,8 @@ class Server(object):
             if not requestMessage:
                 break
             print "Server.serve, data: " + requestMessage
-            reqHandler = RequestHandler(args={requestMessage, clientAddr, self.caching, self.ttl})
-            thread.start()
+            reqHandler = RequestHandler(requestMessage, clientAddr, self.caching, self.ttl)
+            reqHandler.run()
             
     def shutdown(self):
         """ Shutdown the server """

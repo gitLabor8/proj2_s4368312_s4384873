@@ -51,6 +51,8 @@ class Resolver(object):
         addresses = []
         hints = ["198.41.0.4","192.228.79.201","192.33.4.12","199.7.91.13","192.203.230.10","192.5.5.241","192.112.36.4","198.97.190.53","192.36.148.17","192.58.128.30","193.0.14.129","199.7.83.42","202.12.27.33"]
         hintdex = 0
+        rCache = dns.cache.RecordCache(self.ttl)
+        rCache.read_cache_file()
         while not found:
             sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             sock.settimeout(timeout)
@@ -81,19 +83,23 @@ class Resolver(object):
                 for answer in response.answers:
                     if answer.type_ == Type.A:
                         addresses.append(answer.rdata.data)
+                        found = True
                     if answer.type_ == Type.CNAME:
                         searchname = answer.rdata.data
                         aliases.append(searchname)
-                        if not response.header.ar_count == 0:
-                            for additional in response.additionals:
-                                if additional.name == searchname:
-                                    addresses.append(additional.rdata.data)
+                        for additional in response.additionals:
+                            if additional.name == searchname and additional.type_ == Type.A:
+                                addresses.append(additional.rdata.data)
+                                found = True
+                            if additional.name == searchname and additional.type_ == Type.CNAME:
+                                aliases.append(additional.rdata.data)
                 for authority in response.authorities:
                     if authority.type_ == Type.NS:
                         nsName = authority.rdata.data
                         for additional in response.additionals:
-                            if additional.name == nsName:
+                            if additional.name == nsName and additional.type_ == Type.A:
                                 hints.insert(hintdex + 1, additional.rdata.data)
                 hintdex = hintdex + 1
 
+        rCache.write_cache_file()
         return domainname, aliases, addresses

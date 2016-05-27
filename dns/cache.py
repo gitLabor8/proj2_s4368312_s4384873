@@ -9,6 +9,7 @@ It is highly recommended to use these.
 """
 
 import json
+import time
 
 from dns.resource import ResourceRecord, RecordData
 from dns.types import Type
@@ -70,7 +71,14 @@ class RecordCache(object):
             type_ (Type): type
             class_ (Class): class
         """
-        pass
+        found = []
+        for (record, stamp) in self.records:
+            if time.time() > time.mktime(stamp) + record.ttl:
+                self.records.remove((record, stamp))
+            else:
+                if record.name == dname and record.type_ == type_ and record.class_ == class_:
+                    found.append(record)
+        return found
     
     def add_record(self, record):
         """ Add a new Record to the cache
@@ -78,14 +86,22 @@ class RecordCache(object):
         Args:
             record (ResourceRecord): the record added to the cache
         """
-        pass
+        if self.ttl > 0:
+            if record.ttl > self.ttl:
+                record.ttl = self.ttl
+        self.records.append((record,time.localtime()))
     
     def read_cache_file(self):
         """ Read the cache file from disk """
         pass
+        cFile = open("dnsCache", "r")
+        jrecords = cFile.readlines()
+        for jrecord in jrecords:
+            self.records.append(resource_from_json(jrecord))
 
     def write_cache_file(self):
         """ Write the cache file to disk """
         pass
-
-
+        cFile = open("dnsCache", "w")
+        for record in self.records:
+            cFile.write(ResourceEncoder.default(record))

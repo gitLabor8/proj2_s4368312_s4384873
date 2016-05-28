@@ -12,6 +12,7 @@ from socket import AF_INET, SOCK_DGRAM
 import socket
 from threading import Thread
 from dns.resolver import Resolver
+import dns.message
 
 
 class RequestHandler(Thread):
@@ -23,7 +24,8 @@ class RequestHandler(Thread):
     def __init__(self, requestMessage, clientAddr, caching, ttl):
         """ Initialize the handler thread """
         super(Thread, self).__init__()
-        self.requestMessage = requestMessage
+        self.requestByte = requestMessage
+        self.request = dns.message.Message.from_bytes(self.requestByte)
         self.clientAddr = clientAddr
         self.caching = caching
         self.ttl = ttl
@@ -32,10 +34,12 @@ class RequestHandler(Thread):
         """ Run the handler thread """
         # Handle DNS request
         resolver = Resolver(self.caching, self.ttl)
-        hostname = requestMessage 	# TODO Parse input
+        # Works only for ONE question at the time
+        hostname = self.request.questions[0]
         ip = resolver.gethostbyname(hostname)
         #messageSend = ip 	# TODO Create nice message
         messageSend = "Ack!"
+        print "We're through the resolver!"
         self.clientSocket.send(messageSend, clienAddr)
         self.clientSocket.close()
 

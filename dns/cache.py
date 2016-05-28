@@ -93,7 +93,6 @@ class RecordCache(object):
     
     def read_cache_file(self):
         """ Read the cache file from disk """
-        pass
         cFile = open("dnsCache", "r")
         jrecords = cFile.readlines()
         for jrecord in jrecords:
@@ -101,7 +100,6 @@ class RecordCache(object):
 
     def write_cache_file(self):
         """ Write the cache file to disk """
-        pass
         cFile = open("dnsCache", "w")
         for record in self.records:
             cFile.write(ResourceEncoder.default(record))

@@ -39,8 +39,11 @@ class Resolver(object):
         Returns:
             [ResourceRecord]: aliasrrlist
         """
-        pass
-        
+        foundRecords = cache.lookup(dname, Type.CNAME, Class.IN)
+        aliasRecords = foundRecords
+        for foundRecord in foundRecords:
+            aliasRecords.extend(self.lookupAliases(foundRecord.rdata.data, cache))
+        return aliasRecords
 
     def gethostbyname(self, domainname):
         """ Translate a domain name to IPv4 address.
@@ -62,7 +65,8 @@ class Resolver(object):
         searchname = domainname
         aliases = [domainname]
         addresses = []
-        hints = ["198.41.0.4","192.228.79.201","192.33.4.12","199.7.91.13","192.203.230.10","192.5.5.241","192.112.36.4","198.97.190.53","192.36.148.17","192.58.128.30","193.0.14.129","199.7.83.42","202.12.27.33"]
+        hintsStart = ["198.41.0.4","192.228.79.201","192.33.4.12","199.7.91.13","192.203.230.10","192.5.5.241","192.112.36.4","198.97.190.53","192.36.148.17","192.58.128.30","193.0.14.129","199.7.83.42","202.12.27.33"]
+        hints = []
         hintdex = 0
         rCache = dns.cache.RecordCache(self.ttl)
         rCache.read_cache_file()
@@ -79,7 +83,15 @@ class Resolver(object):
                     for Arecord in Arecords:
                         addresses.append(Arecord.rdata.data)
                         found = True
-                    
+                if not found:
+                    NSrecords = rCache.lookup(searchname, Type.NS, Class.IN)
+                    if not NSrecords == []:
+                        NSaddresses = []
+                        for NSrecord in NSrecords:
+                            NSaddresses.extend(rCache.lookup(NSrecord.rdata.data, Type.A, Class.IN))
+                        for NSaddress in NSaddresses:
+                            hints.append(NSaddress.rdata.data)
+                    hints.extend(hintsStart)
             
             # Create and send query
             question = dns.message.Question(searchname, Type.A, Class.IN)

@@ -35,7 +35,7 @@ class RequestHandler(Thread):
         # Handle DNS request
         resolver = Resolver(self.caching, self.ttl)
         # Works only for ONE question at the time
-        hostname = self.request.questions[0]
+        hostname = self.request.questions[0].qname
         ip = resolver.gethostbyname(hostname)
         #messageSend = ip 	# TODO Create nice message
         messageSend = "Ack!"

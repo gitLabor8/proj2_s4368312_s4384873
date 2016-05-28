@@ -29,6 +29,19 @@ class Resolver(object):
         self.caching = caching
         self.ttl = ttl
 
+    def lookupAliases(self, dname, cache):
+        """ Recursive cache lookup of CNAME resource records to find all
+        aliases of a given domain name
+        
+        Args:
+            dname (str): the domain name for which to look up aliases
+            cache (RecordCache): the cache to perform the lookup in
+        Returns:
+            [ResourceRecord]: aliasrrlist
+        """
+        pass
+        
+
     def gethostbyname(self, domainname):
         """ Translate a domain name to IPv4 address.
 
@@ -57,6 +70,16 @@ class Resolver(object):
             sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             sock.settimeout(timeout)
             servername = hints[hintdex]
+            if self.caching:
+                CNrecords = self.lookupAliases(searchname, rCache)
+                for CNrecord in CNrecords:
+                    aliases.append(CNrecord.rdata.data)
+                for alias in aliases:
+                    Arecords = rCache.lookup(alias, Type.A, Class.IN)
+                    for Arecord in Arecords:
+                        addresses.append(Arecord.rdata.data)
+                        found = True
+                    
             
             # Create and send query
             question = dns.message.Question(searchname, Type.A, Class.IN)
@@ -76,11 +99,18 @@ class Resolver(object):
                 for additional in response.additionals:
                     if additional.type_ == Type.CNAME:
                         aliases.append(additional.rdata.data)
+                        if self.caching:
+                            rCache.add_record(additional)
                 for answer in response.answers:
                     if answer.type_ == Type.A:
                         addresses.append(answer.rdata.data)
-            else:
+                        found = True
+                        if self.caching:
+                            rCache.add_record(answer)
+            if not found:
                 for answer in response.answers:
+                    if self.caching:
+                        rCache.add_record(answer)
                     if answer.type_ == Type.A:
                         addresses.append(answer.rdata.data)
                         found = True
@@ -91,14 +121,22 @@ class Resolver(object):
                             if additional.name == searchname and additional.type_ == Type.A:
                                 addresses.append(additional.rdata.data)
                                 found = True
+                                if self.caching:
+                                    rCache.add_record(additional)
                             if additional.name == searchname and additional.type_ == Type.CNAME:
                                 aliases.append(additional.rdata.data)
+                                if self.caching:
+                                    rCache.add_record(additional)
                 for authority in response.authorities:
+                    if self.caching:
+                        rCache.add_record(authority)
                     if authority.type_ == Type.NS:
                         nsName = authority.rdata.data
                         for additional in response.additionals:
                             if additional.name == nsName and additional.type_ == Type.A:
                                 hints.insert(hintdex + 1, additional.rdata.data)
+                                if self.caching:
+                                    rCache.add_record(additional)
                 hintdex = hintdex + 1
 
         rCache.write_cache_file()

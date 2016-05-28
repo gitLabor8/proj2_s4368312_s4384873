@@ -15,6 +15,8 @@ import dns.resolver
 portnr = 8001
 timeout = 15
 
+website = "google.com"
+
 if __name__ == "__main__":
     # Parse arguments
     import argparse
@@ -33,14 +35,12 @@ if __name__ == "__main__":
 #	self.parser = webhttp.parser.ResponseParser()
 	
     # Send the request
-    #header, questions=[], answers=[], authorities=[], additionals=[]):
-    header = ""
-    questions = ["",""]
-    answers = ["",""]
-    authorities = ["", ""]
-    additionals = ["",""]
-    request = dns.message.Message(header, questions, answers, authorities, additionals)
-    client_socket.sendto("Hessel zit niet meer links van je", (hostname, portnr))
+    qname = website
+    qtype = 255			# request for all records
+    qclass = 1		# ANY
+    request = dns.message.Question(qname, qtype, qclass)
+    requestByte = request.to_bytes()
+    client_socket.sendto(requestByte, (hostname, portnr))
 #	self.client_socket.send(request.toBytes)
 
 	# Test response

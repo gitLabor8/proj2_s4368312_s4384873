@@ -32,8 +32,7 @@ class RequestHandler(Thread):
         """ Run the handler thread """
         # Handle DNS request
         resolver = Resolver(self.caching, self.ttl)
-        print "Hij komt nu tot hier. Dit is het gedeelt dat jij snapt."
-        hostname = message 	# TODO Parse input
+        hostname = requestMessage 	# TODO Parse input
         ip = resolver.gethostbyname(hostname)
         #messageSend = ip 	# TODO Create nice message
         messageSend = "Ack!"

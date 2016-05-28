@@ -35,11 +35,21 @@ if __name__ == "__main__":
 #	self.parser = webhttp.parser.ResponseParser()
 	
     # Send the request
+    header = Header(37, 0, 1, 0, 0, 0)
+    header.qr = 0
+    header.opcode = 0
+    header.aa = 0
+    header.tc = 0
+    header.rd = 1
+    header.ra = 0
+    header.z = 0
+    header.rcode = 0
+    
     qname = website
     qtype = 255			# request for all records
     qclass = 1		# ANY
-    request = dns.message.Question(qname, qtype, qclass)
-    requestByte = request.to_bytes()
+    question = dns.message.Question(qname, qtype, qclass)
+    request = Message(header, [question], [], [], [])
     client_socket.sendto(requestByte, (hostname, portnr))
 #	self.client_socket.send(request.toBytes)
 

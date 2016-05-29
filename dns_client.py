@@ -15,7 +15,7 @@ import dns.resolver
 portnr = 8001
 timeout = 15
 
-website = "google.com"
+website = "www.google.com"
 
 if __name__ == "__main__":
     # Parse arguments
@@ -32,6 +32,7 @@ if __name__ == "__main__":
     # Resolve hostname
     """Prepare for testing"""
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    client_socket.settimeout(2)
 #	self.parser = webhttp.parser.ResponseParser()
 	
     # Send the request

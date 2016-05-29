@@ -40,7 +40,11 @@ class RequestHandler(Thread):
         #messageSend = ip 	# TODO Create nice message
         messageSend = "Ack!"
         print "We're through the resolver!"
-        self.clientSocket.send(messageSend, clienAddr)
+        # Crafting of the response
+        
+        respMessage = dns.message.Message(respHeader, [], [], [], [])
+        respMessageByte = respMessage.to_bytes()
+        self.clientSocket.send(respMessageByte, clientAddr)
         self.clientSocket.close()
 
 

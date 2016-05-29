@@ -73,8 +73,8 @@ class Resolver(object):
         while not found:
             sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             sock.settimeout(timeout)
-            servername = hints[hintdex]
             if self.caching:
+                servername = hints[hintdex]
                 CNrecords = self.lookupAliases(searchname, rCache)
                 for CNrecord in CNrecords:
                     aliases.append(CNrecord.rdata.data)
@@ -91,7 +91,7 @@ class Resolver(object):
                             NSaddresses.extend(rCache.lookup(NSrecord.rdata.data, Type.A, Class.IN))
                         for NSaddress in NSaddresses:
                             hints.append(NSaddress.rdata.data)
-                    hints.extend(hintsStart)
+            hints.extend(hintsStart)
             
             # Create and send query
             question = dns.message.Question(searchname, Type.A, Class.IN)

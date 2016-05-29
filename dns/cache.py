@@ -93,7 +93,7 @@ class RecordCache(object):
     
     def read_cache_file(self):
         """ Read the cache file from disk """
-        cFile = open("dnsCache", "r")
+        cFile = open("dns/dnsCache.txt", "r")
         jrecords = cFile.readlines()
         for jrecord in jrecords:
             self.records.append(resource_from_json(jrecord))

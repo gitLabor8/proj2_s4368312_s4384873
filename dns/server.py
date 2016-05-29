@@ -84,4 +84,4 @@ class Server(object):
         """ Shutdown the server """
         self.done = True
         # shutdown socket, neccesairy?
-        webSocket.close()
+        self.webSocket.close()

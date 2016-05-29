@@ -100,6 +100,6 @@ class RecordCache(object):
 
     def write_cache_file(self):
         """ Write the cache file to disk """
-        cFile = open("dnsCache", "w")
+        cFile = open("dns/dnsCache.txt", "w")
         for record in self.records:
             cFile.write(ResourceEncoder.default(record))

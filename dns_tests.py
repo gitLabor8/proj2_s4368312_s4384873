@@ -43,7 +43,7 @@ class TestResolver(unittest.TestCase):
         print Type.to_string(question.qtype) + Class.to_string(question.qclass)
         responseData = self.client_socket.recv(512)
         response = dns.message.Message.from_bytes(responseData)
-        self.assertTrue(response.answer[0])
+        self.assertNotEquals(response.answers, [])
         
     def test_single_lookup_fail(self):
         """Ask for a single non-existing hostname"""
@@ -57,7 +57,16 @@ class TestResolver(unittest.TestCase):
         header.ra = 0
         header.z = 0
         header.rcode = 0
-        pass
+        qname = "xyz.invalid_name.zyx"
+        qtype = Type.A
+        qclass = Class.IN
+        question = dns.message.Question(qname, qtype, qclass)
+        request = dns.message.Message(header, [question])
+        self.client_socket.sendto(request.to_bytes(), (server, portnr))
+        
+        responseBytes = self.client_socket.recv(512)
+        response = dns.message.Message.from_bytes(responseBytes)
+        self.assertEquals(response.answers, [])
     
 # Tests with caching
 class TestResolverCache(unittest.TestCase):

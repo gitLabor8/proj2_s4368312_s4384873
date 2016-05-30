@@ -95,7 +95,7 @@ class RecordCache(object):
         """ Read the cache file from disk """
         rFile = open("dns/dnsCache.txt", "r")
         tFile = open("dns/dnsStamps.txt", "r")
-        jrecords = rFile.readlines()
+        jrecords = rFile.read()
         timeStrings = tFile.readlines()
         records = json.loads(jrecords, object_hook=resource_from_json)
         timeStamps = []

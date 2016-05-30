@@ -81,6 +81,7 @@ class Resolver(object):
                 for Arecord in Arecords:
                     addresses.append(Arecord.rdata.data)
                     found = True
+                    print "Found address in cache"
             if not found:
                 NSrecords = rCache.lookup(searchname, Type.NS, Class.IN)
                 if not NSrecords == []:

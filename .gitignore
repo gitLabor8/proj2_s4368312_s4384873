@@ -1,1 +1,3 @@
 *.pyc
+dnsCache.txt
+dnsStamps.txt

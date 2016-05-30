@@ -95,7 +95,7 @@ class Resolver(object):
         #DNS resolving through queries
         while not found:
             if hintdex > len(hints):
-                return domainname, [domainname], []
+                return domainname, [], []
             sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             sock.settimeout(timeout)
             servername = hints[hintdex]
@@ -159,4 +159,5 @@ class Resolver(object):
                 hintdex = hintdex + 1
 
         rCache.write_cache_file()
+        aliases.remove(domainname)
         return domainname, aliases, addresses

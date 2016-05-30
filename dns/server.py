@@ -19,9 +19,6 @@ from dns.classes import Class
 
 class RequestHandler(Thread):
     """ A handler for requests to the DNS server """
-# Sources
-# http://www.bogotobogo.com/python/Multithread/python_multithreading_subclassing_creating_threads.php
-# http://www.binarytides.com/programming-udp-sockets-in-python/
 
     def __init__(self, requestMessage, clientAddr, caching, ttl):
         """ Initialize the handler thread """
@@ -34,6 +31,7 @@ class RequestHandler(Thread):
         
     def run(self):
         """ Run the handler thread """
+        print "*Ping* We've got a message!"
         # Handle DNS request
         resolver = Resolver(self.caching, self.ttl)
         aliasRecords = []
@@ -64,6 +62,7 @@ class RequestHandler(Thread):
         respMessageByte = respMessage.to_bytes()
         sock.sendto(respMessageByte, self.clientAddr)
         print "Ended request: " + hostname
+        sock.close()
 
 
 class Server(object):
@@ -78,7 +77,6 @@ class Server(object):
             ttl (int): ttl for records (if > 0) of cache
         """
         self.caching = caching
-        print "Caching: " + str(caching)
         self.ttl = ttl
         self.port = port
         self.done = False
@@ -91,11 +89,11 @@ class Server(object):
         while not self.done:
             # Receive request and open handler
             d = self.webSocket.recvfrom(1024)
+            print "Ping message in server.serve"
             requestMessage = d[0]
             clientAddr = d[1]
             if not requestMessage:
                 break
-            print "Server.serve, data: " + requestMessage
             reqHandler = RequestHandler(requestMessage, clientAddr, self.caching, self.ttl)
             reqHandler.run()
             

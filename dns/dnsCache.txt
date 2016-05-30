@@ -231,6 +231,706 @@
         "class": "IN"
     }, 
     {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "e.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "e.gtld-servers.net", 
+        "rdata": "192.12.94.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "b.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "b.gtld-servers.net", 
+        "rdata": "192.33.14.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "j.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "j.gtld-servers.net", 
+        "rdata": "192.48.79.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "m.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "m.gtld-servers.net", 
+        "rdata": "192.55.83.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "i.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "i.gtld-servers.net", 
+        "rdata": "192.43.172.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "f.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "f.gtld-servers.net", 
+        "rdata": "192.35.51.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "a.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "a.gtld-servers.net", 
+        "rdata": "192.5.6.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "g.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "g.gtld-servers.net", 
+        "rdata": "192.42.93.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "h.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "h.gtld-servers.net", 
+        "rdata": "192.54.112.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "l.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "l.gtld-servers.net", 
+        "rdata": "192.41.162.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "k.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "k.gtld-servers.net", 
+        "rdata": "192.52.178.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "c.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "c.gtld-servers.net", 
+        "rdata": "192.26.92.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "d.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "google.com", 
+        "rdata": "ns2.google.com", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "ns2.google.com", 
+        "rdata": "216.239.34.10", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "google.com", 
+        "rdata": "ns1.google.com", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "ns1.google.com", 
+        "rdata": "216.239.32.10", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "google.com", 
+        "rdata": "ns3.google.com", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "ns3.google.com", 
+        "rdata": "216.239.36.10", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "google.com", 
+        "rdata": "ns4.google.com", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "ns4.google.com", 
+        "rdata": "216.239.38.10", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "a.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "a.gtld-servers.net", 
+        "rdata": "192.5.6.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "b.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "b.gtld-servers.net", 
+        "rdata": "192.33.14.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "c.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "c.gtld-servers.net", 
+        "rdata": "192.26.92.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "d.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "d.gtld-servers.net", 
+        "rdata": "192.31.80.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "e.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "e.gtld-servers.net", 
+        "rdata": "192.12.94.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "f.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "f.gtld-servers.net", 
+        "rdata": "192.35.51.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "g.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "g.gtld-servers.net", 
+        "rdata": "192.42.93.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "h.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "h.gtld-servers.net", 
+        "rdata": "192.54.112.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "i.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "i.gtld-servers.net", 
+        "rdata": "192.43.172.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "j.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "j.gtld-servers.net", 
+        "rdata": "192.48.79.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "k.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "k.gtld-servers.net", 
+        "rdata": "192.52.178.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "l.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "l.gtld-servers.net", 
+        "rdata": "192.41.162.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "m.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "m.gtld-servers.net", 
+        "rdata": "192.55.83.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "google.com", 
+        "rdata": "ns2.google.com", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "ns2.google.com", 
+        "rdata": "216.239.34.10", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "google.com", 
+        "rdata": "ns1.google.com", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "ns1.google.com", 
+        "rdata": "216.239.32.10", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "google.com", 
+        "rdata": "ns3.google.com", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "ns3.google.com", 
+        "rdata": "216.239.36.10", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "google.com", 
+        "rdata": "ns4.google.com", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "ns4.google.com", 
+        "rdata": "216.239.38.10", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "e.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "e.gtld-servers.net", 
+        "rdata": "192.12.94.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "b.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "b.gtld-servers.net", 
+        "rdata": "192.33.14.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "j.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "j.gtld-servers.net", 
+        "rdata": "192.48.79.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "m.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "m.gtld-servers.net", 
+        "rdata": "192.55.83.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "i.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "i.gtld-servers.net", 
+        "rdata": "192.43.172.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "f.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "f.gtld-servers.net", 
+        "rdata": "192.35.51.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "a.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "a.gtld-servers.net", 
+        "rdata": "192.5.6.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "g.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "g.gtld-servers.net", 
+        "rdata": "192.42.93.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "h.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "h.gtld-servers.net", 
+        "rdata": "192.54.112.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "l.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "l.gtld-servers.net", 
+        "rdata": "192.41.162.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "k.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "k.gtld-servers.net", 
+        "rdata": "192.52.178.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "c.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "c.gtld-servers.net", 
+        "rdata": "192.26.92.30", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "com", 
+        "rdata": "d.gtld-servers.net", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "google.com", 
+        "rdata": "ns2.google.com", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "ns2.google.com", 
+        "rdata": "216.239.34.10", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "google.com", 
+        "rdata": "ns1.google.com", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "ns1.google.com", 
+        "rdata": "216.239.32.10", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "google.com", 
+        "rdata": "ns3.google.com", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "ns3.google.com", 
+        "rdata": "216.239.36.10", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "NS", 
+        "name": "google.com", 
+        "rdata": "ns4.google.com", 
+        "class": "IN"
+    }, 
+    {
+        "ttl": 172800, 
+        "type": "A", 
+        "name": "ns4.google.com", 
+        "rdata": "216.239.38.10", 
+        "class": "IN"
+    }, 
+    {
         "ttl": 300, 
         "type": "A", 
         "name": "www.google.com", 

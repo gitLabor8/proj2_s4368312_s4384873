@@ -94,6 +94,8 @@ class Resolver(object):
         
         #DNS resolving through queries
         while not found:
+            if hintdex > len(hints):
+                return domainname, [domainname], []
             sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             sock.settimeout(timeout)
             servername = hints[hintdex]

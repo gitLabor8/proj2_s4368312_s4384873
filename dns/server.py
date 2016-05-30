@@ -34,23 +34,24 @@ class RequestHandler(Thread):
         
     def run(self):
         """ Run the handler thread """
-        # TODO Multiple questions
         # Handle DNS request
         resolver = Resolver(self.caching, self.ttl)
-        # Works only for ONE question at the time
-        hostname = self.request.questions[0].qname
-        (hostname, aliases, addresses) = resolver.gethostbyname(hostname)
-        
         aliasRecords = []
-        for alias in aliases:
-            aliasData = dns.resource.RecordData.create(Type.CNAME, alias)
-            aliasRecord = dns.resource.ResourceRecord(hostname, Type.CNAME, Class.IN, 9001, aliasData) # TODO fix ttl
-            aliasRecords.append(aliasRecord)
         addressRecords = []
-        for address in addresses:
-            addressData = dns.resource.RecordData.create(Type.A, address)
-            addressRecord = dns.resource.ResourceRecord(hostname, Type.A, Class.IN, 9001, addressData)
-            addressRecords.append(addressRecord)
+        # Read and resolve the questions one-by-one
+        questions = self.request.questions
+        for question in questions:
+            hostname = question.qname
+            (hostname, aliases, addresses) = resolver.gethostbyname(hostname)
+            
+            for alias in aliases:
+                aliasData = dns.resource.RecordData.create(Type.CNAME, alias)
+                aliasRecord = dns.resource.ResourceRecord(hostname, Type.CNAME, Class.IN, 9001, aliasData) # TODO fix ttl
+                aliasRecords.append(aliasRecord)
+            for address in addresses:
+                addressData = dns.resource.RecordData.create(Type.A, address)
+                addressRecord = dns.resource.ResourceRecord(hostname, Type.A, Class.IN, 9001, addressData)
+                addressRecords.append(addressRecord)
             
         # Crafting of the response
         respHeader = self.request.header
@@ -58,7 +59,7 @@ class RequestHandler(Thread):
         respHeader.qd_count = 0
         respHeader.an_count = 1
         
-        respMessage = dns.message.Message(respHeader, [], addressRecords, [], aliasRecords)
+        respMessage = dns.message.Message(respHeader, [], addressRecords + aliasRecords, [], [])
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         respMessageByte = respMessage.to_bytes()
         sock.sendto(respMessageByte, self.clientAddr)

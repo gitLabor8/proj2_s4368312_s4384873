@@ -53,6 +53,13 @@ if __name__ == "__main__":
     request = dns.message.Message(header, [question], [], [], [])
     requestByte = request.to_bytes()
     client_socket.sendto(requestByte, (hostname, portnr))
+    client_socket.sendto(requestByte, (hostname, portnr))
+    client_socket.sendto(requestByte, (hostname, portnr))
+    client_socket.sendto(requestByte, (hostname, portnr))
+    client_socket.sendto(requestByte, (hostname, portnr))
+    client_socket.sendto(requestByte, (hostname, portnr))
+    client_socket.sendto(requestByte, (hostname, portnr))
+    client_socket.sendto(requestByte, (hostname, portnr))
 #	self.client_socket.send(request.toBytes)
 
 	# Test response

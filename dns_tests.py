@@ -46,6 +46,17 @@ class TestResolver(unittest.TestCase):
         self.assertTrue(response.answer[0])
         
     def test_single_lookup_fail(self):
+        """Ask for a single non-existing hostname"""
+        dnsID = randint(0, 65535)
+        header = dns.message.Header(dnsID, 0, 1, 0, 0, 0)
+        header.qr = 0
+        header.opcode = 0
+        header.aa = 0
+        header.tc = 0
+        header.rd = 1
+        header.ra = 0
+        header.z = 0
+        header.rcode = 0
         pass
     
 # Tests with caching

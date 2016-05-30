@@ -9,6 +9,7 @@ import dns.resolver
 import sys
 from dns.types import Type
 from dns.classes import Class
+import hashlib
 
 portnr = 8001
 server = "localhost"
@@ -25,7 +26,11 @@ class TestResolver(unittest.TestCase):
        
     def test_single_lookup(self):
         """Ask for a single existing hostname"""
-        header = dns.message.Header(37, 0, 1, 0, 0, 0)
+        qname = "www.funnygames.com"
+        h = hashlib.sha224()
+        h.update(qname)
+        dnsID = h.hexdigest()
+        header = dns.message.Header(42, 0, 1, 0, 0, 0)
         header.qr = 0
         header.opcode = 0
         header.aa = 0
@@ -34,7 +39,6 @@ class TestResolver(unittest.TestCase):
         header.ra = 0
         header.z = 0
         header.rcode = 0
-        qname = "www.funnygames.com"
         qtype = 255			# request for all records
         qclass = 1			# ANY
         question = dns.message.Question(qname, qtype, qclass)

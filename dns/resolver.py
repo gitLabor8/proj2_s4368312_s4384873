@@ -70,42 +70,45 @@ class Resolver(object):
         hintdex = 0
         rCache = dns.cache.RecordCache(self.ttl)
         rCache.read_cache_file()
+        
+        #Cache lookup
+        if self.caching:
+            CNrecords = self.lookupAliases(searchname, rCache)
+            for CNrecord in CNrecords:
+                aliases.append(CNrecord.rdata.data)
+            for alias in aliases:
+                Arecords = rCache.lookup(alias, Type.A, Class.IN)
+                for Arecord in Arecords:
+                    addresses.append(Arecord.rdata.data)
+                    found = True
+            if not found:
+                NSrecords = rCache.lookup(searchname, Type.NS, Class.IN)
+                if not NSrecords == []:
+                    NSaddresses = []
+                    for NSrecord in NSrecords:
+                        NSaddresses.extend(rCache.lookup(NSrecord.rdata.data, Type.A, Class.IN))
+                    for NSaddress in NSaddresses:
+                        hints.append(NSaddress.rdata.data)
+        hints.extend(hintsStart)
+        
+        #DNS resolving through queries
         while not found:
             sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             sock.settimeout(timeout)
-            if self.caching:
-                CNrecords = self.lookupAliases(searchname, rCache)
-                for CNrecord in CNrecords:
-                    aliases.append(CNrecord.rdata.data)
-                for alias in aliases:
-                    Arecords = rCache.lookup(alias, Type.A, Class.IN)
-                    for Arecord in Arecords:
-                        addresses.append(Arecord.rdata.data)
-                        found = True
-                if not found:
-                    NSrecords = rCache.lookup(searchname, Type.NS, Class.IN)
-                    if not NSrecords == []:
-                        NSaddresses = []
-                        for NSrecord in NSrecords:
-                            NSaddresses.extend(rCache.lookup(NSrecord.rdata.data, Type.A, Class.IN))
-                        for NSaddress in NSaddresses:
-                            hints.append(NSaddress.rdata.data)
-            hints.extend(hintsStart)
             servername = hints[hintdex]
             
-            if not found:
-                # Create and send query
-                question = dns.message.Question(searchname, Type.A, Class.IN)
-                header = dns.message.Header(9001, 0, 1, 0, 0, 0)
-                header.qr = 0
-                header.opcode = 0
-                header.rd = 0
-                query = dns.message.Message(header, [question])
-                sock.sendto(query.to_bytes(), (servername, serverport))
-        
-                # Receive response
-                data = sock.recv(512)
-                response = dns.message.Message.from_bytes(data)
+            # Create and send query
+            question = dns.message.Question(searchname, Type.A, Class.IN)
+            header = dns.message.Header(9001, 0, 1, 0, 0, 0)
+            header.qr = 0
+            header.opcode = 0
+            header.rd = 0
+            query = dns.message.Message(header, [question])
+            sock.sendto(query.to_bytes(), (servername, serverport))
+    
+            # Receive response
+            data = sock.recv(512)
+            response = dns.message.Message.from_bytes(data)
     
             # Get data
             if header.rd:
@@ -120,7 +123,7 @@ class Resolver(object):
                         found = True
                         if self.caching:
                             rCache.add_record(answer)
-            if not found:
+            if not header.rd:
                 for answer in response.answers:
                     if self.caching:
                         rCache.add_record(answer)

@@ -10,9 +10,6 @@ import sys
 from dns.types import Type
 from dns.classes import Class
 
-portnr = 8001
-server = "localhost"
-
 # Tests without caching
 class TestResolver(unittest.TestCase):
     def setUp(self):
@@ -35,8 +32,8 @@ class TestResolver(unittest.TestCase):
         header.z = 0
         header.rcode = 0
         qname = "www.funnygames.com"
-        qtype = 255			# request for all records
-        qclass = 1			# ANY
+        qtype = Type.ANY         	# request for all records
+        qclass = Class.IN		# ANY
         question = dns.message.Question(qname, qtype, qclass)
         request = dns.message.Message(header, [question], [], [], [])
         requestByte = request.to_bytes()
@@ -63,7 +60,7 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="HTTP Tests")
     parser.add_argument("-s", "--server", type=str, default="localhost")
-    parser.add_argument("-p", "--port", type=int, default=5001)
+    parser.add_argument("-p", "--port", type=int, default=8001)
     args, extra = parser.parse_known_args()
     portnr = args.port
     server = args.server

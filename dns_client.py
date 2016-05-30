@@ -56,10 +56,13 @@ if __name__ == "__main__":
 #	self.client_socket.send(request.toBytes)
 
 	# Test response
-    d = client_socket.recvfrom(1024)
-    reply = d[0]
-    address = d[1]
-    print "reply: " + reply
+    responseData = client_socket.recv(512)
+    response = dns.message.Message.from_bytes(responseData)
+    
+    everything = ""
+    for resource in response.resources:
+        everything = everything + (resource.to_string()) + "\n"
+    print "response:\n" + everything
 #	byteResponse = self.client_socket.recv(1024)
 #	response = Message.(byteResponse)
 #	response.getResources

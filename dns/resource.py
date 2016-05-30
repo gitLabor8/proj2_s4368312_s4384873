@@ -30,6 +30,9 @@ class ResourceRecord(object):
         self.class_   = class_
         self.ttl      = ttl
         self.rdata    = rdata
+        
+    def to_string(self):
+        return self.name + ":" + Type.to_string(self.type_) + " " + Class.to_string(self.class_) + " " + str(self.ttl) + "\n" + self.rdata.data
 
     def to_bytes(self, offset, composer):
         """ Convert ResourceRecord to bytes """

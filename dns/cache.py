@@ -93,13 +93,21 @@ class RecordCache(object):
     
     def read_cache_file(self):
         """ Read the cache file from disk """
-        cFile = open("dns/dnsCache.txt", "r")
-        jrecords = cFile.readlines()
-        for jrecord in jrecords:
-            self.records.append(resource_from_json(jrecord))
+        rFile = open("dns/dnsCache.txt", "r")
+        tFile = open("dns/dnsStamps.txt", "r")
+        jrecords = rFile.readlines()
+        timeStrings = tFile.readlines()
+        records = json.loads(jrecords, object_hook=resource_from_json)
+        timeStamps = []
+        for timeString in timeStrings:
+            timeStamps.append(time.strptime(timeString))
+        for record, timeStamp in zip(records, timeStamps):
+            self.records.append((record, timeStamp))
 
     def write_cache_file(self):
         """ Write the cache file to disk """
-        cFile = open("dns/dnsCache.txt", "w")
+        rFile = open("dns/dnsCache.txt", "w")
+        tFile = open("dns/dnsStamps.txt", "w")
+        rFile.write(json.dumps(self.records, cls=ResourceEncoder, indent=4))
         for record in self.records:
-            cFile.write(ResourceEncoder.default(record))
+            tFile.write(time.strftime("%a %b %d %H:%M:%S %Y", record[1]) + "\n")

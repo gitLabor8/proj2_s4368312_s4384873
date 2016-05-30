@@ -77,6 +77,7 @@ class Server(object):
             ttl (int): ttl for records (if > 0) of cache
         """
         self.caching = caching
+        print "Caching: " + str(caching)
         self.ttl = ttl
         self.port = port
         self.done = False

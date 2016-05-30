@@ -12,7 +12,7 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="DNS Server")
     parser.add_argument("-c", "--caching", action="store_true",
-            help="Enable caching")
+            help="Enable caching", default=True)
     parser.add_argument("-t", "--ttl", metavar="time", type=int, default=0, 
             help="TTL value of cached entries (if > 0)")
     parser.add_argument("-p", "--port", type=int, default=8001,

@@ -93,18 +93,19 @@ class Resolver(object):
             hints.extend(hintsStart)
             servername = hints[hintdex]
             
-            # Create and send query
-            question = dns.message.Question(searchname, Type.A, Class.IN)
-            header = dns.message.Header(9001, 0, 1, 0, 0, 0)
-            header.qr = 0
-            header.opcode = 0
-            header.rd = 0
-            query = dns.message.Message(header, [question])
-            sock.sendto(query.to_bytes(), (servername, serverport))
-    
-            # Receive response
-            data = sock.recv(512)
-            response = dns.message.Message.from_bytes(data)
+            if not found:
+                # Create and send query
+                question = dns.message.Question(searchname, Type.A, Class.IN)
+                header = dns.message.Header(9001, 0, 1, 0, 0, 0)
+                header.qr = 0
+                header.opcode = 0
+                header.rd = 0
+                query = dns.message.Message(header, [question])
+                sock.sendto(query.to_bytes(), (servername, serverport))
+        
+                # Receive response
+                data = sock.recv(512)
+                response = dns.message.Message.from_bytes(data)
     
             # Get data
             if header.rd:

@@ -13,6 +13,8 @@ import socket
 from threading import Thread
 from dns.resolver import Resolver
 import dns.message
+from dns.types import Type
+from dns.classes import Class
 
 
 class RequestHandler(Thread):
@@ -32,20 +34,35 @@ class RequestHandler(Thread):
         
     def run(self):
         """ Run the handler thread """
+        # TODO Multiple questions
         # Handle DNS request
         resolver = Resolver(self.caching, self.ttl)
         # Works only for ONE question at the time
         hostname = self.request.questions[0].qname
-        ip = resolver.gethostbyname(hostname)
-        #messageSend = ip 	# TODO Create nice message
-        messageSend = "Ack!"
-        print "We're through the resolver!"
-        # Crafting of the response
+        (hostname, aliases, addresses) = resolver.gethostbyname(hostname)
         
-        respMessage = dns.message.Message(respHeader, [], [], [], [])
+        aliasRecords = []
+        for alias in aliases:
+            aliasData = dns.resource.RecordData.create(Type.CNAME, alias)
+            aliasRecord = dns.resource.ResourceRecord(hostname, Type.CNAME, Class.IN, 9001, aliasData) # TODO fix ttl
+            aliasRecords.append(aliasRecord)
+        addressRecords = []
+        for address in addresses:
+            addressData = dns.resource.RecordData.create(Type.A, address)
+            addressRecord = dns.resource.ResourceRecord(hostname, Type.A, Class.IN, 9001, addressData)
+            addressRecords.append(addressRecord)
+            
+        # Crafting of the response
+        respHeader = self.request.header
+        respHeader.qr = 1
+        respHeader.qd_count = 0
+        respHeader.an_count = 1
+        
+        respMessage = dns.message.Message(respHeader, [], addressRecords, [], aliasRecords)
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         respMessageByte = respMessage.to_bytes()
-        self.clientSocket.send(respMessageByte, clientAddr)
-        self.clientSocket.close()
+        sock.sendto(respMessageByte, self.clientAddr)
+        print "Ended request: " + hostname
 
 
 class Server(object):

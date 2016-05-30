@@ -61,7 +61,7 @@ class Resolver(object):
         timeout = 2 # the time waited for a response
         found = False
         servername = "8.8.8.8"
-        serverport = 8080
+        serverport = 53
         searchname = domainname
         aliases = [domainname]
         addresses = []
